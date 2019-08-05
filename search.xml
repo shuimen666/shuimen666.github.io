@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title><![CDATA[Test]]></title>
+    <url>%2F2019%2F07%2F19%2FTest%2F</url>
+    <content type="text"><![CDATA[This is a test text. Text1Text1-112345#include&lt;math.h&gt;int main()&#123; return 0;&#125; Baidu: Baidu Text1-2 this is a test.Hello! Text212345678910class hello&#123;private: double apple;public: void hello(double a) &#123; apple = a; &#125;&#125; This is a test, too.]]></content>
+      <categories>
+        <category>测试用</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[Hello World]]></title>
+    <url>%2F2019%2F07%2F18%2Fhello-world%2F</url>
+    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment hahahahhahahahha]]></content>
+  </entry>
+</search>
