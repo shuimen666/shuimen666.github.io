@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>秘密空间线索2</title></head>
 <body>
-    <canvas id="canvas1" width="480" height="480"></canvas>   <!--注意canvas的大小，要联系地图大小设置-->
+    <canvas id="canvas1" width="520" height="480"></canvas>   <!--注意canvas的大小，要联系地图大小设置-->
     <script>　　　　　//瓦片地图编辑器获取到的数据
         var map={
          "data":[1, 1,  1,  1,  1,  1,  1,  1,  1,  1, 1,  1,  1,
@@ -19,8 +19,8 @@
         var canvas = document.getElementById("canvas1");
         var ctx = canvas.getContext("2d");
 
-        var W = 20;    //每一块地图块的宽
-        var H = 20;    //每一块地图块的高
+        var W = 40;    //每一块地图块的宽
+        var H = 40;    //每一块地图块的高
         var l = 0;
         var t = 0;
         for (var i=0; i<map.data.length; i++){    
@@ -35,7 +35,7 @@
             if (map.data[i]>1){     //当地图块的数据不为0时绘画地图块
             	if(map.data[i]>=90)
             	{
-	            	ctx.font = 'bold 10px Arial';
+	            	ctx.font = 'bold 20px Arial';
 	            	ctx.textAlign = 'center';
 					ctx.textBaseline = 'middle';
 					if(map.data[i]==90) ctx.fillText("起点", l+W/2, t+W/2, W);
@@ -54,10 +54,10 @@
 	            	else if(map.data[i]==17) num = "7";
 	            	else if(map.data[i]==18) num = "8";
 	            	else if(map.data[i]==19) num = "9";
-	            	ctx.font = 'bold 20px Arial';
+	            	ctx.font = 'bold 40px Arial';
 	            	ctx.textAlign = 'center';
 					ctx.textBaseline = 'middle';
-	                ctx.fillText(num, l+W/2, t+W/2, W);
+	                ctx.fillText(num, l+W/2, t+W/2+3, W);
 	            }
             }    
         }
