@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <p id="test">金风玉露一相逢，便胜却人间无数。</p>
+        <p id="test">有想我吗，宝贝。</p>
+        <p id="test">凭此页面找我领取奖励哦！</p>
+    </body>  
+    <script language = JavaScript>
+		function password() {
+			var testV = 1;
+			var pass1 = prompt('请输入密码:', '');
+			while (testV < 3) {
+				if (!pass1) history.go(-1);
+				if (pass1 == "51525355") {
+					alert('密码正确!');
+					break;
+				}
+				testV += -1;
+				var pass1 = prompt('密码错误!请重新输入:');
+			}
+			if (pass1 != "password" & testV == 3) history.go(-1);
+			return " ";
+		}
+		document.write(password());
+	</script>
+</html>
