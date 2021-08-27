@@ -10,8 +10,8 @@ if(!$conn) {
 }
 mysqli_select_db($dbname, $con);
 
-$uname = $_POST["name"];
-$ucontent = $_POST["content"];
+$uname = $_GET["name"];
+$ucontent = $_GET["content"];
 
 $sql = "INSERT INTO test (name,content) VALUES ('$uname','$ucontent')";
 if (!mysqli_query($sql,$con))
