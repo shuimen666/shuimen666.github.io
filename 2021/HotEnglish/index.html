@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>
+			英语热知识
+		</title>
+			<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	</head>
+	<body>
+		<h3>热知识！</h3>
+		
+		<button type="button" id="buttonHideTime" onclick="hideTime();">显示添加时间</button>
+		<table border="1">
+			<tr>
+			<td>单词</td>
+			<td>释义</td>
+			<td id="tcTime"></td>
+			</tr>
+			<tr id="tb0"></tr>
+			<tr id="tb1"></tr>
+			<tr id="tb2"></tr>
+			<tr id="tb3"></tr>
+			<tr id="tb4"></tr>
+			<tr id="tb5"></tr>
+			<tr id="tb6"></tr>
+			<tr id="tb7"></tr>
+			<tr id="tb8"></tr>
+			<tr id="tb9"></tr>
+		</table>
+		<button type="button" id="lastpage" disabled=true onclick="last();">上一页</button>
+		<button type="button" id="nextpage" disabled=true onclick="next();">下一页</button>
+		<script type="text/javascript" src="show.php"></script>
+		<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+		<script type="text/javascript">
+			nowpage=0;
+			hidecol=true;
+			init();
+			function hideTime()
+			{
+				/*
+				if(!hidecol) {
+					for(var i=0;i<10;i++){
+						var tmp=document.getElementById("tt"+i);
+						if(tmp) tmp.innerHTML="";
+					}
+					document.getElementById("tcTime").innerHTML='';
+				}
+				else */
+				hidecol = !hidecol;
+				init();
+			}
+			function next()
+			{
+				var pageall = Math.ceil(jsnum/10)-1;
+				if(nowpage<pageall)
+				{
+					nowpage++;
+					init();
+				}
+			}
+			function last()
+			{
+				if(nowpage>0)
+				{
+					nowpage--;
+					init();
+				}
+			}
+			function checkbutton()
+			{
+				var pageall = Math.ceil(jsnum/10)-1;
+				if(nowpage>0) lastpage.disabled=false;
+				else lastpage.disabled=true;
+				if(nowpage<pageall) nextpage.disabled=false;
+				else nextpage.disabled=true;
+			}
+			function init()
+			{
+				for(var j=0;j<10;j++)
+					document.getElementById("tb"+j).innerHTML = '';
+				var j=0;
+				for(var i=nowpage*10;i<(nowpage+1)*10&&i<jsnum;i++,j++)
+				{
+					if(!hidecol)
+					{
+						document.getElementById("tb"+j).innerHTML = '<td>'+jsword[i]+'</td><td>'+jsdes[i]+'</td><td id="tt'+i+'">'+jstime[i]+'</td><td><button type="button" onclick=deleteword('+i+')>删除</button></td>';
+						document.getElementById("tcTime").innerHTML = '添加时间';
+						document.getElementById("buttonHideTime").innerHTML = '隐藏添加时间';
+					}
+					else
+					{
+						document.getElementById("tb"+j).innerHTML = '<td>'+jsword[i]+'</td><td>'+jsdes[i]+'</td><td><button type="button" onclick=deleteword('+i+')>删除</button></td>';
+						document.getElementById("tcTime").innerHTML = '';
+						document.getElementById("buttonHideTime").innerHTML = '显示添加时间';
+					}
+				}
+				checkbutton();
+			}
+			function deleteword(deleteid)
+			{
+				if(confirm('确认要删除 '+jsword[deleteid]+': '+jsdes[deleteid]+' 吗？')==true)
+				{
+					/*
+					var oAjax = null;
+					if(window.XMLHttpRequest){
+					    oAjax = new XMLHttpRequest();
+					}else{
+					    oAjax = new ActiveXObject('Microsoft.XMLHTTP');
+					}
+					oAjax.open('GET', 'delete.php?word='+jsword[deleteid]+'?des='+jsdes[deleteid], true);
+					oAjax.send();
+					*/
+					$.ajax({
+						type:'GET',
+						dataType:'text',
+						data:{
+							'id':jsid[deleteid],
+							'word':jsword[deleteid],
+							'des':jsdes[deleteid],
+						},
+						url:'delete.php',
+						success:function(data){
+							alert("删除成功");
+							location.reload(true);
+						},
+						error:function(xhr, textStatus, errorThrown){
+							
+							alert("删除失败");
+							/*
+							alert("进入error---");
+							alert("状态码："+xhr.status);
+							alert("状态:"+xhr.readyState)；//当前状态,0-未初始化，1-正在载入，2-已经载入，3-数据进行交互，4-完成。
+							alert("错误信息:"+xhr.statusText);
+							alert("返回响应信息："+xhr.responseText);//这里是详细的信息　　　　　　　　
+							alert(errorThrown);*/
+							location.reload(true);
+						}
+					});
+					return true;
+				}
+			}
+		</script>
+		<br>
+		<br>
+		<form name="insertphp" action="insert.php" method="get" target="_self">
+		<p>单词: <input type="text" name="word" autocomplete="off" /></p>
+		<p>释义: <textarea rows=5 cols=30 type="text" name="des" autocomplete="off" /></textarea></p>
+		<p><input type="submit" value="记录" /></p>
+		</form>
+		<script type="text/javascript"></script>
+	</body>
+</html>

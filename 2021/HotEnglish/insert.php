@@ -11,12 +11,12 @@ if(!$conn) {
 }
 mysqli_select_db($conn,$dbname);
 
-$uname = $_GET["name"];
-$ucontent = $_GET["content"];
+$uword = $_GET["word"];
+$udes = $_GET["des"];
 
-if($uname==""||$ucontent=="") die("不可为空！");
+if($uword==""||$udes=="") die("不可为空！");
 
-$sql = "INSERT INTO note (name,content) VALUES ('$uname','$ucontent')";
+$sql = "INSERT INTO engword (word,des,time) VALUES ('$uword','$udes',NOW())";
 if (!mysqli_query($conn,$sql))
 {
 	die('Error: ' . mysqli_error());

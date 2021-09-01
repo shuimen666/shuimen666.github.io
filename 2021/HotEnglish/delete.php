@@ -11,17 +11,18 @@ if(!$conn) {
 }
 mysqli_select_db($conn,$dbname);
 
-$uname = $_GET["name"];
-$ucontent = $_GET["content"];
+$uid = $_GET["id"];
+$uword = $_GET["word"];
+$udes = $_GET["des"];
 
-if($uname==""||$ucontent=="") die("不可为空！");
+if($uword==""||$udes=="") die("不可为空！");
 
-$sql = "INSERT INTO note (name,content) VALUES ('$uname','$ucontent')";
+$sql = "DELETE FROM engword WHERE id='$uid' AND word='$uword' AND des='$udes'";
 if (!mysqli_query($conn,$sql))
 {
 	die('Error: ' . mysqli_error());
 }
-echo "1 record added";
+echo "1 record deleted";
 header("location:index.html");
 
 mysqli_close($conn);

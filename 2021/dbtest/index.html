@@ -7,12 +7,48 @@
 			<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 	</head>
 	<body>
-		<form action="insert.php" method="get">
-		昵称: <input type="text" name="name" />
+		<h3>留言板</h3>
+		
+		<table border="1">
+			<tr>
+			<td>昵称</td>
+			<td>内容</td>
+			</tr>
+			<tr id="tb9"></tr>
+			<tr id="tb8"></tr>
+			<tr id="tb7"></tr>
+			<tr id="tb6"></tr>
+			<tr id="tb5"></tr>
+			<tr id="tb4"></tr>
+			<tr id="tb3"></tr>
+			<tr id="tb2"></tr>
+			<tr id="tb1"></tr>
+			<tr id="tb0"></tr>
+		</table>
+		<script type="text/javascript" src="show.php"></script>
+		<script type="text/javascript">
+			//var jst = new Array(10);
+			//var jst1,jst2,jst3,jst4,jsnum;
+			//alert(jsnum);
+			//var js = JSON.parse(jstext);
+			//alert(js);
+			//document.getElementById("tbbb").innerHTML = jsnum;
+			//alert(jstext);
+			//alert(jb);
+			//document.getElementById("tbbb").innerHTML = jsnum;
+			for(var i=0;i<jsnum;i++)
+			{
+				//alert(jst1);
+				document.getElementById("tb"+i).innerHTML = jst[i];
+			}
+		</script>
 		<br>
-		内容: <input type="text" name="content" />
 		<br>
-		<input type="submit" />
+		<form name="insertphp" action="insert.php" method="get" target="_self">
+		<p>昵称: <input type="text" name="name" /></p>
+		<p>内容: <textarea rows=5 cols=30 type="text" name="content" /></textarea></p>
+		<p><input type="submit" value="留言" /></p>
 		</form>
+		<script type="text/javascript"></script>
 	</body>
 </html>
