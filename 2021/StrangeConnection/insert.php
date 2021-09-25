@@ -11,19 +11,21 @@ if(!$conn) {
 }
 mysqli_select_db($conn,$dbname);
 
-$uid = $_GET["id"];
 $uword = $_GET["word"];
-$udes = $_GET["des"];
 
-if($uword==""||$udes=="") die("不可为空！");
+if($uword=="") die("error");
 
-$sql = "DELETE FROM engword WHERE id='$uid' AND word='$uword'";
+$sql = "SELECT word FROM strangeconnection_wordpool WHERE word='$uword'";
+$res = mysqli_query($conn,$sql);
+if(mysqli_num_rows($res)>0) die("error");
+
+
+$sql = "INSERT INTO strangeconnection_wordpool (word) VALUES ('$uword')";
 if (!mysqli_query($conn,$sql))
 {
-	die('Error: ' . mysqli_error());
+	die('error');
 }
-echo "1 record deleted";
-header("location:index.html");
+echo "success";
 
 mysqli_close($conn);
 ?>

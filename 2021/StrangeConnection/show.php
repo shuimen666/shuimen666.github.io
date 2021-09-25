@@ -11,19 +11,21 @@ if(!$conn) {
 }
 mysqli_select_db($conn,$dbname);
 
-$uid = $_GET["id"];
-$uword = $_GET["word"];
-$udes = $_GET["des"];
-
-if($uword==""||$udes=="") die("不可为空！");
-
-$sql = "DELETE FROM engword WHERE id='$uid' AND word='$uword'";
-if (!mysqli_query($conn,$sql))
+$sql = "SELECT id,word FROM strangeconnection_wordpool ORDER BY id DESC";
+$res = mysqli_query($conn,$sql);
+if (!$res)
 {
-	die('Error: ' . mysqli_error());
+	die('Error: ' . mysqli_error($conn));
 }
-echo "1 record deleted";
-header("location:index.html");
+
+$i = 0;
+while($arr = mysqli_fetch_assoc($res)) {
+	$list[$i] = $arr;
+	$i++;
+}
+$json['count'] = $i;
+$json['data'] = $list;
+echo json_encode($json);
 
 mysqli_close($conn);
 ?>

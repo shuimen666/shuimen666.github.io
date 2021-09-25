@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<link rel="stylesheet" type="text/css" href="frame.css">
 		<title>
 			英语热知识
 		</title>
 			<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 	</head>
 	<body>
-		<h3>热知识！</h3>
+		<div class="mainbox">
+		<h3 style="text-align: center;">热知识！</h3>
 		
 		<button type="button" id="buttonHideTime" onclick="hideTime();">显示添加时间</button>
 		<table border="1">
@@ -29,9 +31,37 @@
 		</table>
 		<button type="button" id="lastpage" disabled=true onclick="last();">上一页</button>
 		<button type="button" id="nextpage" disabled=true onclick="next();">下一页</button>
-		<script type="text/javascript" src="show.php"></script>
 		<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
 		<script type="text/javascript">
+			jsnum=0;
+			jsid = [];
+			jsword = [];
+			jsdes = [];
+			jstime = [];
+			getshow();
+			function getshow()
+			{
+				$.ajax({
+						type:'GET',
+						dataType:'json',
+						data:{},
+						url:'show.php',
+						success:function(data){
+							jsnum = data.count;
+							for(var i=0;i<data.count;i++)
+							{
+								jsid[i]=data.data[i]['id'];
+								jsword[i]=data.data[i]['word'];
+								jsdes[i]=data.data[i]['des'].replace(/\r\n/g,"<br>");
+								jstime[i]=data.data[i]['time'];
+							}
+							init();
+						},
+						error:function(xhr, textStatus, errorThrown){
+							alert("获取失败");
+						}
+					});
+			}
 			nowpage=0;
 			hidecol=true;
 			init();
@@ -76,25 +106,28 @@
 			}
 			function init()
 			{
+				
 				for(var j=0;j<10;j++)
 					document.getElementById("tb"+j).innerHTML = '';
 				var j=0;
 				for(var i=nowpage*10;i<(nowpage+1)*10&&i<jsnum;i++,j++)
 				{
-					if(!hidecol)
-					{
-						document.getElementById("tb"+j).innerHTML = '<td>'+jsword[i]+'</td><td>'+jsdes[i]+'</td><td id="tt'+i+'">'+jstime[i]+'</td><td><button type="button" onclick=deleteword('+i+')>删除</button></td>';
-						document.getElementById("tcTime").innerHTML = '添加时间';
-						document.getElementById("buttonHideTime").innerHTML = '隐藏添加时间';
-					}
-					else
-					{
-						document.getElementById("tb"+j).innerHTML = '<td>'+jsword[i]+'</td><td>'+jsdes[i]+'</td><td><button type="button" onclick=deleteword('+i+')>删除</button></td>';
-						document.getElementById("tcTime").innerHTML = '';
-						document.getElementById("buttonHideTime").innerHTML = '显示添加时间';
-					}
+					var timediv = !hidecol?'</td><td id="tt'+i+'">'+jstime[i]:'';
+					document.getElementById("tb"+j).innerHTML = '<td>'+jsword[i]+'</td><td>'+jsdes[i]+timediv+'</td><td type="button" class="deleteButton" onclick=deleteword('+i+') onmousedown="mouseDown(this)" onmouseup="mouseUp(this)" style="background-color: white;border-radius: 6px;border-color: gray lightgray lightgray gray;border-width: 2px 2px 2px 2px;box-shadow: 1px 1px;text-align: center;">删除</td>';
+					document.getElementById("tcTime").innerHTML = !hidecol?'添加时间':'';
+					document.getElementById("buttonHideTime").innerHTML = !hidecol?'隐藏添加时间':'显示添加时间';
 				}
 				checkbutton();
+			}
+			function mouseDown(obj)
+			{
+				obj.style['border-color']= "darkgray gray gray darkgray";
+				obj.style['background-color']= "lightgray";
+			}
+			function mouseUp(obj)
+			{
+				obj.style['border-color']= "gray lightgray lightgray gray";
+				obj.style['background-color']= "white";
 			}
 			function deleteword(deleteid)
 			{
@@ -120,6 +153,7 @@
 						},
 						url:'delete.php',
 						success:function(data){
+
 							alert("删除成功");
 							location.reload(true);
 						},
@@ -148,5 +182,6 @@
 		<p><input type="submit" value="记录" /></p>
 		</form>
 		<script type="text/javascript"></script>
+		</div>
 	</body>
 </html>

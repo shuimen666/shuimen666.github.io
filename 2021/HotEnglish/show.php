@@ -18,6 +18,7 @@ if (!$res)
 	die('Error: ' . mysqli_error($conn));
 }
 
+/*
 $i = 0;
 echo "var jsword = new Array(1000);";
 echo "var jsdes = new Array(1000);";
@@ -37,6 +38,15 @@ while($arr = mysqli_fetch_array($res)) {
 	$i++;
 }
 echo "var jsnum=$i;";
+*/
+$i = 0;
+while($arr = mysqli_fetch_assoc($res)) {
+	$list[$i] = $arr;
+	$i++;
+}
+$json['count'] = $i;
+$json['data'] = $list;
+echo json_encode($json);
 
 mysqli_close($conn);
 ?>
